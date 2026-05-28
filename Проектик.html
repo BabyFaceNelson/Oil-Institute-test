@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Гид по кампусу ВШН — для выживших первокурсников 🎓</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:     #000000;
+      --blue-mid: #0059C2;
+      --accent:   #20B2AA;
+      --cream:    #F5F1E8;
+      --dark:     #0D1821;
+      --gray:     #6B7280;
+      --light:    #FFFFFF;
+      --card-bg:  #FFFFFF;
+      --fun:      #FF6B6B;
+      --fun2:     #FFD93D;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Geologica', sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-card:  0 4px 24px rgba(0,63,138,.10);
+      --shadow-hover: 0 12px 40px rgba(0,63,138,.18);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 3px; }
+
+    /* ─── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 64px;
+      background: rgba(0,63,138,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-logo { font-family: var(--font-display); font-weight: 900; font-size: 1.25rem; color: var(--light); letter-spacing: -.5px; text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.8); text-decoration: none; font-size: .875rem; font-weight: 500; letter-spacing: .02em; transition: color .2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--dark) !important; padding: .45rem 1.1rem; border-radius: 999px; font-weight: 600 !important; transition: transform .2s, box-shadow .2s !important; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(32,178,170,.4) !important; }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .burger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; transition: .3s; }
+
+    /* ─── HERO ── */
+    #hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,.7) 100%), url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&auto=format&fit=crop') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 18s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
+    .hero-bg::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,.025) 80px, rgba(255,255,255,.025) 81px); }
+    .hero-content { position: relative; z-index: 2; max-width: 820px; padding: 0 1.5rem; }
+    .hero-tag { display: inline-block; background: var(--accent); color: var(--dark); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; padding: .35rem 1rem; border-radius: 999px; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp .8s var(--ease-out-expo) .2s forwards; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; color: var(--light); line-height: 1.05; letter-spacing: -.02em; margin-bottom: 1.25rem; opacity: 0; animation: fadeUp .9s var(--ease-out-expo) .4s forwards; }
+    .hero-title em { color: var(--accent); font-style: normal; }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,.8); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.65; opacity: 0; animation: fadeUp .9s var(--ease-out-expo) .6s forwards; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp .9s var(--ease-out-expo) .8s forwards; }
+    .btn-primary { background: var(--accent); color: var(--dark); padding: .85rem 2rem; border-radius: 999px; font-weight: 700; font-size: .95rem; text-decoration: none; transition: transform .2s, box-shadow .2s; letter-spacing: .02em; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(32,178,170,.45); }
+    .btn-outline { background: transparent; color: var(--light); padding: .85rem 2rem; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.5); font-weight: 600; font-size: .95rem; text-decoration: none; transition: background .2s, border-color .2s; }
+    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: white; }
+    .hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .5rem; opacity: 0; animation: fadeUp .9s var(--ease-out-expo) 1.2s forwards; }
+    .hero-scroll span { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+    .scroll-line { width: 1.5px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,.6), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%, 100% { opacity: .4; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.15); } }
+
+    /* ─── STATS ── */
+    .stats-strip { background: var(--blue); padding: 2.5rem 5vw; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; }
+    .stat-num { font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--accent); line-height: 1; display: block; }
+    .stat-label { font-size: .8rem; color: rgba(255,255,255,.7); margin-top: .35rem; letter-spacing: .04em; text-transform: uppercase; }
+
+    /* ─── SECTIONS COMMON ── */
+    section { padding: 7rem 5vw; }
+    .section-tag { display: inline-block; background: rgba(0,63,138,.1); color: var(--blue-mid); font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; padding: .3rem .9rem; border-radius: 999px; margin-bottom: 1rem; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: var(--dark); line-height: 1.15; letter-spacing: -.02em; margin-bottom: .75rem; }
+    .section-title em { color: var(--blue-mid); font-style: normal; }
+    .section-lead { font-size: 1.05rem; color: var(--gray); max-width: 540px; line-height: 1.7; }
+
+    /* ─── ABOUT ── */
+    #about { background: var(--light); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-img-wrap { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4/3; }
+    .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out-expo); }
+    .about-img-wrap:hover img { transform: scale(1.04); }
+    .about-badge { position: absolute; bottom: 1.5rem; right: 1.5rem; background: var(--accent); color: var(--dark); border-radius: 16px; padding: 1rem 1.5rem; font-weight: 700; font-size: .9rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.2); }
+    .about-badge strong { display: block; font-family: var(--font-display); font-size: 1.8rem; line-height: 1; }
+    .about-features { margin-top: 2rem; display: flex; flex-direction: column; gap: .75rem; }
+    .feat-row { display: flex; align-items: flex-start; gap: .75rem; padding: .9rem 1rem; background: var(--cream); border-radius: 12px; transition: background .2s, transform .2s; }
+    .feat-row:hover { background: rgba(0,63,138,.06); transform: translateX(4px); }
+    .feat-icon { width: 36px; height: 36px; background: var(--blue-mid); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
+    .feat-row p { font-size: .9rem; color: var(--gray); line-height: 1.5; }
+    .feat-row strong { display: block; font-size: .95rem; color: var(--dark); margin-bottom: .2rem; }
+
+    /* ─── LOCATIONS ── */
+    #locations { background: var(--cream); }
+    .locs-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+    .loc-filter { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .filter-btn { background: var(--light); border: 1.5px solid #E2E8F0; color: var(--gray); padding: .45rem 1.1rem; border-radius: 999px; font-size: .8rem; font-weight: 600; cursor: pointer; transition: .2s; font-family: var(--font-body); }
+    .filter-btn:hover, .filter-btn.active { background: var(--blue-mid); border-color: var(--blue-mid); color: white; }
+    .loc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.75rem; }
+    .loc-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-card); transition: transform .3s var(--ease-out-expo), box-shadow .3s; cursor: pointer; }
+    .loc-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+    .loc-card.hidden { display: none; }
+    .card-img { position: relative; height: 200px; overflow: hidden; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease-out-expo); }
+    .loc-card:hover .card-img img { transform: scale(1.06); }
+    .card-cat { position: absolute; top: .9rem; left: .9rem; background: var(--blue-mid); color: white; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .75rem; border-radius: 999px; }
+    .card-body { padding: 1.25rem 1.4rem 1.4rem; }
+    .card-body h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: .4rem; color: var(--dark); }
+    .card-body p { font-size: .875rem; color: var(--gray); line-height: 1.6; }
+    .card-meta { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #F0F0F0; }
+    .meta-item { display: flex; align-items: center; gap: .3rem; font-size: .78rem; color: var(--gray); }
+
+    /* ─── MAP ── */
+    #map-section { background: var(--blue-mid); color: white; padding: 5rem 5vw; position: relative; overflow: hidden; }
+    #map-section::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .map-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: center; }
+    .map-text .section-title { color: white; }
+    .map-text .section-title em { color: var(--accent); }
+    .map-text .section-lead { color: rgba(255,255,255,.7); }
+    .map-links { margin-top: 2rem; display: flex; flex-direction: column; gap: .65rem; }
+    .map-link-item { display: flex; align-items: center; gap: .85rem; padding: .85rem 1.1rem; background: rgba(255,255,255,.07); border-radius: 12px; border: 1px solid rgba(255,255,255,.1); text-decoration: none; color: white; transition: background .2s, transform .2s; }
+    .map-link-item:hover { background: rgba(255,255,255,.14); transform: translateX(4px); }
+    .map-link-item .ml-icon { width: 38px; height: 38px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+    .map-link-item strong { display: block; font-size: .9rem; }
+    .map-link-item span { font-size: .78rem; color: rgba(255,255,255,.6); }
+    .map-visual { border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+    .map-visual img { width: 100%; height: 100%; object-fit: cover; }
+    .map-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,63,138,.7) 0%, transparent 50%); display: flex; align-items: flex-end; padding: 1.5rem; }
+    .map-overlay-text { color: white; font-size: .85rem; line-height: 1.5; }
+    .map-overlay-text strong { display: block; font-size: 1rem; margin-bottom: .25rem; }
+
+    /* ─── TIPS ── */
+    #tips { background: var(--light); }
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .tip-card { background: var(--cream); border-radius: 18px; padding: 1.75rem; border: 1.5px solid transparent; transition: border-color .25s, transform .25s, box-shadow .25s; }
+    .tip-card:hover { border-color: var(--blue-mid); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+    .tip-num { font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: rgba(0,63,138,.12); line-height: 1; margin-bottom: .75rem; }
+    .tip-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; color: var(--dark); }
+    .tip-card p { font-size: .875rem; color: var(--gray); line-height: 1.65; }
+
+    /* ─── VIDEO SECTION (бывший #events) ── */
+    #events { background: var(--cream); }
+
+    .video-section-intro {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;
+    }
+
+    /* Video grid cards */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    .v-card {
+      background: var(--light);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,63,138,.09);
+      cursor: pointer;
+      transition: transform .35s var(--ease-out-expo), box-shadow .35s var(--ease-out-expo);
+      position: relative;
+    }
+    .v-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,63,138,.18); }
+
+    .v-thumb {
+      position: relative; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #001f50 0%, #003F8A 50%, #0059C2 100%);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .v-thumb::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,.04) 28px, rgba(255,255,255,.04) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(255,255,255,.04) 28px, rgba(255,255,255,.04) 29px);
+    }
+    .v-thumb img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+
+    .play-btn {
+      position: relative; z-index: 2; width: 56px; height: 56px;
+      background: var(--accent); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .25s var(--ease-out-expo), box-shadow .25s;
+      box-shadow: 0 4px 24px rgba(0,0,0,.35);
+    }
+    .v-card:hover .play-btn { transform: scale(1.12); box-shadow: 0 8px 32px rgba(32,178,170,.5); }
+    .play-btn svg { width: 20px; height: 20px; fill: var(--dark); margin-left: 3px; }
+
+    .v-dur { position: absolute; bottom: .65rem; right: .65rem; background: rgba(0,0,0,.65); color: white; font-size: .68rem; font-weight: 700; padding: .2rem .55rem; border-radius: 6px; letter-spacing: .04em; }
+    .v-num { position: absolute; top: .7rem; left: .7rem; background: rgba(0,0,0,.6); color: white; font-family: var(--font-display); font-size: .75rem; font-weight: 900; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+
+    .v-body { padding: 1.15rem 1.3rem 1.3rem; }
+    .v-body h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: .4rem; line-height: 1.3; }
+    .v-body p { font-size: .82rem; color: var(--gray); line-height: 1.6; }
+    .v-meta { display: flex; align-items: center; gap: .5rem; margin-top: .85rem; flex-wrap: wrap; }
+    .v-tag { background: rgba(0,63,138,.08); color: var(--blue-mid); font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: .25rem .7rem; border-radius: 999px; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,10,25,.88); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; backdrop-filter: blur(8px); }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--dark); border-radius: 24px; overflow: hidden; width: 100%; max-width: 860px; box-shadow: 0 32px 80px rgba(0,0,0,.7); animation: scaleIn .3s var(--ease-out-expo) forwards; }
+    @keyframes scaleIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
+    .modal-video-wrap video, .modal-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .modal-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: linear-gradient(135deg, #001530 0%, #003F8A 100%); color: white; text-align: center; padding: 2rem; }
+    .modal-placeholder .ph-icon { font-size: 3rem; opacity: .6; }
+    .modal-placeholder h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+    .modal-placeholder p { font-size: .85rem; color: rgba(255,255,255,.55); max-width: 320px; line-height: 1.6; }
+    .modal-placeholder code { display: block; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: .75rem 1.25rem; font-size: .78rem; color: var(--accent); font-family: 'Courier New', monospace; margin-top: .5rem; text-align: left; line-height: 1.7; }
+    .modal-info { padding: 1.25rem 1.5rem 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .modal-info h4 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: white; margin-bottom: .3rem; }
+    .modal-info p { font-size: .82rem; color: rgba(255,255,255,.5); }
+    .modal-close { flex-shrink: 0; width: 38px; height: 38px; background: rgba(255,255,255,.1); border: none; border-radius: 50%; color: white; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, transform .2s; }
+    .modal-close:hover { background: rgba(255,255,255,.2); transform: rotate(90deg); }
+
+    /* Section label inside video section */
+    .section-label { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .section-label h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--dark); }
+    .section-label h2 em { color: var(--blue-mid); font-style: normal; }
+    .label-line { flex: 1; height: 1.5px; background: linear-gradient(to right, rgba(0,63,138,.2), transparent); }
+    .label-count { font-size: .75rem; font-weight: 700; color: var(--gray); letter-spacing: .08em; text-transform: uppercase; }
+
+    /* ─── CONTACT ── */
+    #contact { background: var(--dark); color: white; text-align: center; padding: 7rem 5vw; }
+    #contact .section-title { color: white; }
+    #contact .section-title em { color: var(--accent); }
+    #contact .section-lead { color: rgba(255,255,255,.6); margin: 0 auto 3rem; }
+    .contact-cards { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .contact-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 1.75rem 2rem; min-width: 200px; transition: background .2s, transform .2s; }
+    .contact-card:hover { background: rgba(255,255,255,.1); transform: translateY(-3px); }
+    .contact-card .cc-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+    .contact-card h4 { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+    .contact-card p { font-size: .9rem; color: rgba(255,255,255,.8); }
+
+    /* ─── FOOTER ── */
+    footer { background: var(--dark); border-top: 1px solid rgba(255,255,255,.07); padding: 2rem 5vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer .logo { font-family: var(--font-display); font-weight: 900; color: white; font-size: 1rem; }
+    footer .logo span { color: var(--accent); }
+    footer p { font-size: .78rem; color: rgba(255,255,255,.4); }
+    footer .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    footer .footer-links a { font-size: .78rem; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    footer .footer-links a:hover { color: var(--accent); }
+
+    /* ─── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s var(--ease-out-expo), transform .7s var(--ease-out-expo); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── MOBILE NAV ── */
+    .nav-mobile { display: none; position: fixed; inset: 0; background: var(--blue-mid); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-size: 1.5rem; font-family: var(--font-display); color: white; text-decoration: none; font-weight: 700; transition: color .2s; }
+    .nav-mobile a:hover { color: var(--accent); }
+    .close-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+
+    /* ─── FUN EASTER EGG banner ── */
+    .fun-banner {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 1rem 5vw;
+      text-align: center;
+      font-size: .82rem;
+      color: rgba(255,255,255,.6);
+      border-bottom: 2px solid var(--accent);
+    }
+    .fun-banner span { color: var(--accent); font-weight: 700; }
+
+    /* ─── RESPONSIVE ── */
+    @media (max-width: 1000px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) {
+      .stats-strip { grid-template-columns: repeat(2,1fr); }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .map-inner { grid-template-columns: 1fr; }
+      .map-visual { display: none; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+    }
+    @media (max-width: 620px) {
+      .video-grid { grid-template-columns: 1fr; }
+      .modal-box { border-radius: 16px; }
+      .modal-info { flex-direction: column; }
+    }
+    @media (max-width: 600px) {
+      .stats-strip { grid-template-columns: repeat(2,1fr); padding: 2rem; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- FUN TOP BANNER -->
+  <div class="fun-banner">
+    🎓 Добро пожаловать в ВШН! Выживших первокурсников ждёт <span>много приключений</span> — этот гид поможет не заблудиться (и не умереть с голоду) 🍕
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">ВШН <span>Кампус</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">О кампусе</a></li>
+      <li><a href="#locations">Локации</a></li>
+      <li><a href="#map-section">Карта</a></li>
+      <li><a href="#tips">Советы</a></li>
+      <li><a href="#events">Видео</a></li>
+      <li><a href="#contact" class="nav-cta">Помощь 🆘</a></li>
+    </ul>
+    <button class="burger" id="burgerBtn" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="nav-mobile" id="mobileNav">
+    <button class="close-btn" id="closeNav">✕</button>
+    <a href="#about" class="nav-m-link">О кампусе</a>
+    <a href="#locations" class="nav-m-link">Локации</a>
+    <a href="#map-section" class="nav-m-link">Карта</a>
+    <a href="#tips" class="nav-m-link">Советы</a>
+    <a href="#events" class="nav-m-link">Видео</a>
+    <a href="#contact" class="nav-m-link">Помощь</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">🚀 Ты выжил на вступительных — теперь это твой дом</div>
+      <h1 class="hero-title">Ты <em>первокурсник</em>? <br>Тебе сюда!</h1>
+      <p class="hero-sub">Корпуса, столовые, библиотеки, спортзалы и секреты, которые старшекурсники передают шёпотом. Всё в одном месте.</p>
+      <div class="hero-btns">
+        <a href="#locations" class="btn-primary">Изучить кампус 🗺️</a>
+        <a href="#events" class="btn-outline">Смотреть видеогид ▶️</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Листай вниз</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <span class="stat-num">50+</span>
+      <div class="stat-label">Корпусов (и все разные 🏛️)</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">45 000</span>
+      <div class="stat-label">Студентов (ты один из них!)</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">8</span>
+      <div class="stat-label">Городов присутствия</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">1992</span>
+      <div class="stat-label">Год основания (старше тебя 😏)</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img-wrap reveal">
+      <img src="https://rgc.ru/sites/default/files/styles/project__1200x900_/public/objects/IMG_2158_4.jpg?itok=9quaSakU" alt="Кампус ВШН" />
+      <div class="about-badge">
+        <strong>ВШН</strong>
+        Альметьевск
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-tag">О кампусе</div>
+      <h2 class="section-title">Место, где ты<br>проведёшь <em>лучшие годы</em><br>(или не лучшие — всяко бывает)</h2>
+      <p class="section-lead">ВШН — это не просто универ. Это целая экосистема с кучей корпусов, едой, спортом и людьми, которые тоже первый раз тут и так же теряются в расписании.</p>
+      <div class="about-features">
+        <div class="feat-row">
+          <div class="feat-icon">🎓</div>
+          <div>
+            <strong>Мощная научная база</strong>
+            <p>Лаборатории, библиотека, коворкинги — место для тех, кто решил реально учиться (и для тех, кто просто делает вид).</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon">🏋️</div>
+          <div>
+            <strong>Спорт и отдых</strong>
+            <p>Спортивные секции, тренажёрные залы и даже места, где можно просто посидеть и перевести дух после пар.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon">🍜</div>
+          <div>
+            <strong>Столовые и кафе</strong>
+            <p>Несколько точек питания. Совет: приходи до 12:00, иначе встанешь в очередь длиннее, чем к Айфону.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon">🛋️</div>
+          <div>
+            <strong>Общежитие</strong>
+            <p>Есть места для иногородних студентов. Жизнь в общаге — отдельный вид искусства и социального эксперимента.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- LOCATIONS -->
+  <section id="locations">
+    <div class="locs-header">
+      <div>
+        <div class="section-tag">Локации</div>
+        <h2 class="section-title">Ключевые места<br><em>кампуса</em></h2>
+      </div>
+      <div class="loc-filter">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="учёба">Учёба</button>
+        <button class="filter-btn" data-filter="еда">Еда</button>
+        <button class="filter-btn" data-filter="спорт">Спорт</button>
+        <button class="filter-btn" data-filter="жизнь">Жизнь</button>
+      </div>
+    </div>
+
+    <div class="loc-grid">
+
+      <!-- 1 -->
+      <div class="loc-card reveal" data-cat="учёба">
+        <div class="card-img">
+          <img src="https://almetievsk-ru.ru/images/uploads/ckeditor/jpeg/65c4d32c2c8b0_A7C07964.jpeg" alt="Главный корпус" />
+          <span class="card-cat">Учёба</span>
+        </div>
+        <div class="card-body">
+          <h3>Главный корпус на Советской</h3>
+          <p>Современный учебный корпус, где проходят занятия по нефтегазовому делу, экономике и IT. Актовый зал, переговорные и доступ к научной библиотеке.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 186а
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Пн - Пт 8:00–17:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="loc-card reveal" data-cat="учёба">
+        <div class="card-img">
+          <img src="https://sun9-13.userapi.com/s/v1/ig2/ICydRUCc68F4DmCSEyfkySd8V2vTa0la81NtYxdShUF6OFhRG4VjUlLumCHzpvVuhWW9dQ9U_wnO6l7gJny9GK8M.jpg?quality=95&as=32x21,48x32,72x48,108x72,160x107,240x160,360x240,480x320,540x360,640x427,720x480,1080x720,1280x853,1440x960,2560x1707&from=bu&cs=2560x0" alt="Библиотека" />
+          <span class="card-cat">Учёба</span>
+        </div>
+        <div class="card-body">
+          <h3>Библиотека ВШН</h3>
+          <p>Главная студенческая библиотека с тихими зонами, переговорными и доступом к электронным базам данных. Фонд специализированной литературы по нефтегазовой отрасли, электронный каталог.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 186а
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Пн–Пт 9:00–17:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="loc-card reveal" data-cat="еда">
+        <div class="card-img">
+          <img src="https://sun9-41.userapi.com/s/v1/ig2/W5Q3TT5puzIs7QlmI1UtOhWWX6fpOQaIxelXsMpXJXy-FNnJTFC-ou84vbZQXJMtNtcGbLcsJy74Whhgea-3hw98.jpg?quality=95&as=32x21,48x31,72x46,108x70,160x103,240x154,360x232,480x309,540x348,640x412,720x463,1080x695,1280x824&from=bu&u=MOfDUq_5g7d6v0rtIOZytqTManLBxl4OzD1j3x9mi2A&cs=1280x0" alt="Столовая" />
+          <span class="card-cat">Еда</span>
+        </div>
+        <div class="card-body">
+          <h3>Студенческая столовая</h3>
+          <p>Горячие блюда, салат-бар, выпечка и напитки по студенческим ценам. Обед обходится от 200 рублей.В меню — несколько вариантов первых и вторых блюд на каждый день. Специальные скидки при предъявлении QR-кода. </p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 186а
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Ежедневно 7:00–21:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="loc-card reveal" data-cat="спорт">
+        <div class="card-img">
+          <img src="https://avatars.mds.yandex.net/get-altay/6528051/2a0000018f7b9bc5021d4e45e0430d8e3bf6/orig" alt="Спортзал" />
+          <span class="card-cat">Спорт</span>
+        </div>
+        <div class="card-body">
+          <h3>Спортивный комплекс</h3>
+          <p>Тренажёрный зал, игровые площадки для баскетбола и волейбола. Все площадки оснащены современным оборудованием и соответствуют спортивным стандартам. Удобно заниматься до работы или учёбы.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 222д
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Пн — Пт
+17:00–21:00
+Сб — Вс
+12:00–18:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="loc-card reveal" data-cat="жизнь">
+        <div class="card-img">
+          <img src="https://avatars.mds.yandex.net/get-altay/9830591/2a0000018f5eae459be41dcd4dd191126c75/XXL_height" alt="Общежитие" />
+          <span class="card-cat">Жизнь</span>
+        </div>
+        <div class="card-body">
+          <h3>Студенческое общежитие</h3>
+          <p>Современные комнаты, зоны отдыха, прачечная и wi-fi. Несколько корпусов в шаговой доступности от учёбы.Круглосуточная охрана и система видеонаблюдения обеспечивают безопасность жильцов.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 212 к1
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Круглосуточно
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="loc-card reveal" data-cat="еда">
+        <div class="card-img">
+          <img src="D:\ПРОЕКТпутеводитель\IMG_7224.PNG" alt="Кофейня" />
+          <span class="card-cat">Еда</span>
+        </div>
+        <div class="card-body">
+          <h3>Кофейня</h3>
+          <p>Уютная кофейня прямо в корпусе — лучшее место для перерывов. Specialty-кофе и атмосфера стартапа.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 186а
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Пн–Пт 8:30–17:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="loc-card reveal" data-cat="учёба">
+        <div class="card-img">
+          <img src="https://sun9-7.userapi.com/s/v1/ig2/vfDtzSGABXAmy9sHJ92IdySvRX1W1GlAgQYJhyqfAMDF6G78-kjiBdIwCfk6pyOaTan7BhPx587ML4x4iFBMP00u.jpg?quality=95&as=32x21,48x31,72x47,108x70,160x104,240x156,360x234,480x312,540x351,640x416,720x469,1080x703,1280x833,1440x937,2560x1666&from=bu&u=9PndflIHOUs_Y0_ki95y_mJMLHH4SLvT_AjpWEPEO3w&cs=2560x0" alt="Коворкинг" />
+          <span class="card-cat">Учёба</span>
+        </div>
+        <div class="card-body">
+          <h3>Студенческий коворкинг</h3>
+          <p>Открытое пространство для работы над проектами, встреч студенческих команд и хакатонов.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 186а
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Пн–Вс 9:00–23:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="loc-card reveal" data-cat="жизнь">
+        <div class="card-img">
+          <img src="D:\ПРОЕКТпутеводитель\IMG_7223.PNG" alt="Медпункт" />
+          <span class="card-cat">Жизнь</span>
+        </div>
+        <div class="card-body">
+          <h3>Медицинский центр</h3>
+          <p>Студенческая медецинский кабинет, первая помощь. Выдача справок. Личное посещение врача.</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Советская улица, 186а
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Пн–Пт 9:00–17:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAP SECTION -->
+  <section id="map-section">
+    <div class="map-inner">
+      <div class="map-text reveal">
+        <div class="section-tag" style="background:rgba(255,255,255,.1);color:var(--accent)">Где мы</div>
+        <h2 class="section-title">Найди нас<br>на <em>карте</em></h2>
+        <p class="section-lead">Альметьевск, Советская, 186А. Если потерялся — открой карту, а не иди наугад.</p>
+        <div class="map-links">
+          <a href="https://maps.google.com/?q=Альметьевск+ВШН+Советская+186А" target="_blank" class="map-link-item">
+            <div class="ml-icon">📍</div>
+            <div>
+              <strong>Google Maps — ВШН</strong>
+              <span>Маршруты на транспорте и пешком</span>
+            </div>
+          </a>
+          <a href="https://yandex.ru/maps/org/almetyevskskiy_gosudarstvenny_tekhnologicheskiy_universitet_vysshaya_shkola_nefti/74690493260/?ll=52.318627%2C54.913086&z=16" target="_blank" class="map-link-item">
+            <div class="ml-icon">🧭</div>
+            <div>
+              <strong>Яндекс Карты</strong>
+              <span>Схема и пробки в реальном времени</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="map-visual reveal">
+        <img src="https://znanie.info/_img/photo/163/788.jpg" alt="Альметьевск с воздуха" />
+        <div class="map-overlay">
+          <div class="map-overlay-text">
+            <strong>Альметьевск, Советская</strong>
+            Добро пожаловать домой 🏠
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section id="tips">
+    <div style="text-align:center;margin-bottom:1rem" class="reveal">
+      <div class="section-tag" style="margin:0 auto 1rem">Советы выживания</div>
+      <h2 class="section-title">Лайфхаки для<br><em>первокурсников</em> 🧠</h2>
+      <p class="section-lead" style="margin:0 auto">Старшие студенты проверили на себе. Некоторые болезненно.</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card reveal">
+        <div class="tip-num">01</div>
+        <h3>Зайди на сайт ВШН</h3>
+        <p>Там расписание, карта корпусов и личный кабинет. Без этого — ты Шрёдингер: одновременно учишься и нет.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">02</div>
+        <h3>Получи студенческий билет</h3>
+        <p>Открывает библиотеки, скидки в столовой и льготный проездной. Это не корочка — это магический артефакт.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">03</div>
+        <h3>Вступай в студ. организации</h3>
+        <p>Более 15 клубов — от дебатов до театра. Лучший способ обзавестись друзьями и не просидеть все 4 года в одиночестве.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">04</div>
+        <h3>Изучи IPR-books</h3>
+        <p>Все учебники онлайн. Не покупай бумажные, не проверив сначала — это как покупать DVD в 2026 году.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">05</div>
+        <h3>Используй психолога</h3>
+        <p>Сессия — это стресс, а не характер. Психолог ВШН работает бесплатно. Это не слабость, это стратегия выживания.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">06</div>
+        <h3>Обедай до 12:00 ⏰</h3>
+        <p>После полудня в столовой очередь как на «Гарри Поттера». Пришёл раньше — поел спокойно. Это закон джунглей.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">07</div>
+        <h3>Подпишись на Telegram</h3>
+        <p>Официальный канал ВШН, каналы факультетов, студ. чаты — там новости быстрее, чем преподаватель успевает сказать.</p>
+      </div>
+      <div class="tip-card reveal">
+        <div class="tip-num">08</div>
+        <h3>Ходи на первые пары 😅</h3>
+        <p>Знаем, что тяжело. Но именно на первых парах преподы запоминают лица. Это работает в твою пользу на зачёте.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO SECTION  -->
+  <section id="events">
+    <div class="video-section-intro reveal">
+      <div>
+        <div class="section-tag">Видеогид</div>
+        <h2 class="section-title">Смотри, как<br>живёт <em>кампус</em> 🎬</h2>
+        <p class="section-lead">Видео о жизни в ВШН — корпуса, атмосфера, студенты и всё, что нужно знать до первого учебного дня.</p>
+      </div>
+      <a href="https://агту-вшн.рф/" target="_blank" class="btn-primary" style="text-decoration:none;align-self:flex-end">Все материалы →</a>
+    </div>
+
+    <div class="section-label reveal">
+      <h2>Все <em>видео</em></h2>
+      <div class="label-line"></div>
+      <span class="label-count">5 роликов</span>
+    </div>
+
+    <div class="video-grid">
+
+      <div class="v-card reveal" data-index="0">
+        <div class="v-thumb">
+<img src="https://static.rustore.ru/imgproxy/MUjPnwSxMvgMqXCLF209P3BqGO_2D61gy7rF4vGiiGo/plain/https://static.rustore.ru/rustore-strapi/7/memes_6_5a82ccda0c.webp@webp" aly="превью">
+          <span class="v-num">01</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="v-dur">0:47</span>
+        </div>
+        <div class="v-body">
+          <h3>Добро пожаловать в ВШН 👋</h3>
+          <p>Общий обзор кампуса: главные корпуса, атмосфера и всё, что тебя ждёт.</p>
+          <div class="v-meta"><span class="v-tag">Обзор</span></div>
+        </div>
+      </div>
+
+      <div class="v-card reveal" data-index="1">
+        <div class="v-thumb">
+<img src="https://tetrika-school.ru/blog/wp-content/uploads/2026/01/chto-takoe-memy-i-pochemu-oni-tak-populyarny-2048x1155.webp" aly="превью">
+          <span class="v-num">02</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="v-dur">1:45</span>
+        </div>
+        <div class="v-body">
+          <h3>История корпуса 🏛️</h3>
+          <p>Как менялись корпуса и общежития, где искать скрытые аудитории и короткие маршруты к кофе.</p>
+          <div class="v-meta"><span class="v-tag">История</span></div>
+        </div>
+      </div>
+
+      <div class="v-card reveal" data-index="2">
+        <div class="v-thumb">
+<img src="https://static.rustore.ru/imgproxy/RzbwGTW3cQWoRcVBjotogHMrhSHggu4-kXBclFx79FQ/plain/https://static.rustore.ru/rustore-strapi/7/memes_7_a2586e2fb2.webp@webp" aly="превью">
+          <span class="v-num">03</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="v-dur">1:15</span>
+        </div>
+        <div class="v-body">
+          <h3>Напрвления подготовки 📚</h3>
+          <p>Кем стать и где учиться: обзхор всех специальностей.</p>
+          <div class="v-meta"><span class="v-tag">Направления</span></div>
+        </div>
+      </div>
+
+      <div class="v-card reveal" data-index="3">
+        <div class="v-thumb">
+<img src="https://static.kinoafisha.info/upload/articles/377602011409.jpg" aly="превью">
+          <span class="v-num">04</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="v-dur">1:17</span>
+        </div>
+        <div class="v-body">
+          <h3>Студенческий офис 📚</h3>
+          <p>Помощь студентам: справки, документы, академические отпуска и любые другие вопросы.</p>
+          <div class="v-meta"><span class="v-tag">Учёба</span></div>
+        </div>
+      </div>
+
+      <div class="v-card reveal" data-index="4">
+        <div class="v-thumb">
+<img src="https://litra.online/wp-content/uploads/2021/05/screenshot_20210511-071446_google.jpg" aly="превью">
+          <span class="v-num">05</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="v-dur">1:23</span>
+        </div>
+        <div class="v-body">
+          <h3>Спорт и досуг 💪</h3>
+          <p>Спортзалы, секции и студенческие клубы — как провести время вне учёбы и остаться живым.</p>
+          <div class="v-meta"><span class="v-tag">Спорт</span></div>
+        </div>
+      </div>
+
+      
+    </div>
+  </section>
+
+  <!-- VIDEO MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+      <div class="modal-video-wrap" id="modalVideoWrap">
+        <div class="modal-placeholder" id="modalPlaceholder">
+          <div class="ph-icon">🎬</div>
+          <h3 id="modalTitle">Видео</h3>
+          <p>Вставь ссылку на видео в массив <strong>videoData</strong> в коде страницы:</p>
+          <code>
+// для YouTube:<br>
+src: "https://youtube.com/embed/ID"<br><br>
+// для локального файла:<br>
+src: "videos/video1.mp4"
+          </code>
+        </div>
+      </div>
+      <div class="modal-info">
+        <div>
+          <h4 id="modalInfoTitle">Название видео</h4>
+          <p id="modalInfoDesc">Описание</p>
+        </div>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-tag" style="background:rgba(255,255,255,.1);color:var(--accent)">Помощь 🆘</div>
+      <h2 class="section-title">Потерялся?<br>Мы <em>найдём</em> тебя</h2>
+      <p class="section-lead">Студенческая поддержка работает. Не стесняйся писать — все здесь когда-то были новичками.</p>
+    </div>
+    <div class="contact-cards reveal">
+      <div class="contact-card">
+        <div class="cc-icon">📞</div>
+        <h4>Телефон</h4>
+        <p>+7 (8553) 31-09-20</p>
+        <p>+7 (917) 280-02-38</p>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">✉️</div>
+        <h4>E-mail</h4>
+        <p>abiturient@agni-rt.ru</p>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">💬</div>
+        <h4>Telegram</h4>
+        <p>@hse_support</p>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">🏠</div>
+        <h4>Студ офис</h4>
+        <p>Советская ул., 186А, каб 2А30</p>
+      </div>
+    </div>
+    <a href="https://агту-вшн.рф/" target="_blank" class="btn-primary" style="text-decoration:none;display:inline-block">
+      Перейти на сайт ВШН →
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">ВШН <span>Кампус</span></div>
+    <p>© 2026 Студенческий гид ВШН · Неофициальный проект · Сделан с 💙 и кофе</p>
+    <ul class="footer-links">
+      <li><a href="#hero">Главная</a></li>
+      <li><a href="#locations">Локации</a></li>
+      <li><a href="#tips">Советы</a></li>
+      <li><a href="#events">Видео</a></li>
+      <li><a href="https://агту-вшн.рф/" target="_blank">агту-вшн.рф</a></li>
+    </ul>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    /* ── Video data — вставь свои ссылки сюда ── */
+    const videoData = [
+      { title: "Добро пожаловать в ВШН", desc: "Общий обзор кампуса: главные корпуса, атмосфера и всё, что тебя ждёт.", src: "Видео/telegram_video.mp4", type: "mp4", duration: "0:46" },
+      { title: "Учебные корпуса", desc: "Где находятся аудитории, как найти нужный кабинет и лайфхаки навигации.", src: "Видео/telegram_video1.mp4", type: "mp4", duration: "4:10" },
+      { title: "Столовые и кафе", desc: "Где вкусно и недорого поесть — обзор всех точек питания на кампусе.", src: "Видео/IMG_5581(2).MP4", type: "mp4", duration: "2:55" },
+      { title: "Библиотека и коворкинги", desc: "Лучшие места для учёбы и работы над проектами.", src: "Видео/IMG_5582(3).MP4", type: "mp4", duration: "3:48" },
+      { title: "Спорт и досуг", desc: "Спортзалы, секции и студенческие клубы — как провести время вне учёбы.", src: "Видео/IMG_5583(4).MP4", type: "mp4", duration: "4:33" },
+      { title: "Советы первокурсникам", desc: "Главные лайфхаки от старших студентов — что знать с первого дня.", src: "", type: "mp4", duration: "5:01" }
+    ];
+
+    /* ── Modal logic ── */
+    const overlay    = document.getElementById('modalOverlay');
+    const videoWrap  = document.getElementById('modalVideoWrap');
+    const placeholder = document.getElementById('modalPlaceholder');
+    const modalTitle = document.getElementById('modalTitle');
+    const infoTitle  = document.getElementById('modalInfoTitle');
+    const infoDesc   = document.getElementById('modalInfoDesc');
+    const closeBtn   = document.getElementById('modalClose');
+
+    function openModal(index) {
+      const d = videoData[index];
+      if (!d) return;
+      modalTitle.textContent = d.title;
+      infoTitle.textContent  = d.title;
+      infoDesc.textContent   = d.desc;
+      const old = videoWrap.querySelector('video, iframe');
+      if (old) old.remove();
+      placeholder.style.display = 'flex';
+      if (d.src) {
+        placeholder.style.display = 'none';
+        if (d.type === 'youtube') {
+          const iframe = document.createElement('iframe');
+          iframe.src = d.src.includes('?') ? d.src + '&autoplay=1&rel=0' : d.src + '?autoplay=1&rel=0';
+          iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+          iframe.allowFullscreen = true;
+          videoWrap.prepend(iframe);
+        } else {
+          const video = document.createElement('video');
+          video.src = d.src; video.controls = true; video.autoplay = true;
+          videoWrap.prepend(video);
+        }
+      }
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      const media = videoWrap.querySelector('video, iframe');
+      if (media) media.remove();
+    }
+
+    document.querySelectorAll('.v-card').forEach((card, i) => {
+      card.addEventListener('click', () => openModal(i));
+    });
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    /* ── Burger menu ── */
+    document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+    document.getElementById('closeNav').addEventListener('click',  () => document.getElementById('mobileNav').classList.remove('open'));
+    document.querySelectorAll('.nav-m-link').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open')));
+
+    /* ── Scroll reveal ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i * 0.07) + 's';
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── Location filter ── */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        document.querySelectorAll('.loc-card').forEach(card => {
+          card.classList.toggle('hidden', f !== 'all' && card.dataset.cat !== f);
+        });
+      });
+    });
+
+    /* ── Nav scroll ── */
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      navEl.style.background = window.scrollY > 80 ? 'rgba(0,20,50,.97)' : 'rgba(0,63,138,.92)';
+    });
+  </script>
+</body>
+</html>
